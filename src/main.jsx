@@ -1,8 +1,13 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
-import { ApolloClient, HttpLink, InMemoryCache, gql } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloProvider,
+  HttpLink,
+  InMemoryCache,
+  gql,
+} from "@apollo/client";
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
@@ -10,20 +15,8 @@ const client = new ApolloClient({
   }),
 });
 
-const query = gql`
-  query {
-    allPersons {
-      name
-      phone
-    }
-  }
-`;
-client.query({ query }).then((res) => {
-  console.log(res.data);
-});
-
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  <ApolloProvider client={client}>
     <App />
-  </StrictMode>
+  </ApolloProvider>
 );
