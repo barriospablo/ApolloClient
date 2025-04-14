@@ -2,19 +2,20 @@ import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import { gql, useQuery } from "@apollo/client";
+import Persons from "./Persons";
 
 const ALL_PERSONS = gql`
   query {
     allPersons {
       name
       phone
+      id
     }
   }
 `;
 
 function App() {
-  const result = useQuery(ALL_PERSONS);
-  console.log(result);
+  const { data, error, loading } = useQuery(ALL_PERSONS);
 
   return (
     <>
@@ -23,8 +24,14 @@ function App() {
         <img src={reactLogo} className="logo react" alt="React logo" />
         {/* </a> */}
       </div>
-      <h1>React + Graphql</h1>
-      <p>hola</p>
+      {loading ? (
+        <p>Cargando</p>
+      ) : (
+        <div>
+          <h1>React + Graphql</h1>
+          {data && <Persons persons={data.allPersons} />}
+        </div>
+      )}
     </>
   );
 }
