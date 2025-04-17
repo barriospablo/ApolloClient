@@ -5,6 +5,7 @@ import { PersonForm } from "./PersonFrom";
 import reactLogo from "./assets/react.svg";
 import { usePersons } from "./persons/custom-hooks";
 import "./App.css";
+import { PhoneForm } from "./PhoneForm";
 
 function App() {
   const { data, error, loading } = usePersons();
@@ -36,6 +37,7 @@ function App() {
         </div>
       )}
       <PersonForm notifyError={notifyError} />
+      <PhoneForm notifyError={notifyError} />
     </>
   );
 }
